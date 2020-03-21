@@ -8,27 +8,24 @@ class Usermodel extends CI_Model{
     }
 
     public function create($data){
-        $this->db->insert('userdata', $data);
+        $this->db->insert('crud', $data);
     }
 
     public function showData(){
         $this->db->select(array('id','Name'));
-        $query = $this->db->get('userdata');
-		foreach($query->result() as $row){
-			$data[] = $row;
-		}
+        $query = $this->db->get('crud')->result_array();
 
-		return $data;
+		return $query;
     }
 
     public function updateData($id, $name){
 		$this->db->set('Name', $name);
 		$this->db->where(array('id' => $id));
-		$this->db->update('userdata');
+		$this->db->update('crud');
     }
 
     function deleteData($id){
-        $this->db->delete('userdata', array('id' => $id));
+        $this->db->delete('crud', array('id' => $id));
     }
 }
 

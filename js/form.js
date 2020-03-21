@@ -1,3 +1,10 @@
+/** initiate data */
+
+var baseUrl=baseUrl;
+
+
+/** Model */
+
 Ext.define('userModel', {
     extend: 'Ext.data.Model',
     fields: [{
@@ -11,86 +18,49 @@ Ext.define('userModel', {
     }]
 });
 
-// Ext.define('Ext.data.writer.SinglePost', {
-//     extend: 'Ext.data.writer.Writer',
-//     alternateClassName: 'Ext.data.SinglePostWriter',
-//     alias: 'writer.singlepost',
 
-//     writeRecords: function(request, data) {
-//         request.params = data[0];
-//         return request;
-//     }
-// });
 
-var baseUrl=baseUrl;
+/** Store */
+
+const myStore = Ext.create('Ext.data.Store', {
+    model: 'userModel',
+    autoload: true,
+    autoSync: false,
+    proxy:{
+        type: 'rest',
+        url: baseUrl,
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },  
+        api:{
+            create: baseUrl+'user/insert',
+            read: baseUrl+'user/select',
+            update: baseUrl+'user/update',
+            destroy: baseUrl+'user/delete'
+        },
+        reader: {
+            type: 'json',
+            successProperty: 'success',
+            root: 'data',
+            messageProperty: 'message'
+        },
+        writer: {
+            type: 'json',
+            writeAllFields: true,
+            root: '',
+            nameProperty: 'mapping'
+        }
+    },
+    listeners: {
+        update: function(store){
+            store.sync();
+        }
+    }
+});
+
 
 
 Ext.onReady(function(){
-    
-    
-    var myStore = Ext.create('Ext.data.Store', {
-        model: 'userModel',
-        autoload: true,
-        autoSync: false,
-        proxy:{
-            type: 'rest',
-            url: baseUrl,
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },  
-            api:{
-                create: baseUrl+'user/insert',
-                read: baseUrl+'user/select',
-                update: baseUrl+'user/update',
-                destroy: baseUrl+'user/delete'
-            },
-            reader: {
-                type: 'json',
-                successProperty: 'success',
-                root: 'data',
-                messageProperty: 'message'
-            },
-            writer: {
-                type: 'json',
-                writeAllFields: true,
-                root: '',
-                nameProperty: 'mapping'
-            }
-            // listeners: {
-            //     exception: function(proxy, response, operation){
-            //         Ext.MessageBox.show({
-            //             title: 'REMOTE EXCEPTION',
-            //             msg: operation.getError(),
-            //             icon: Ext.MessageBox.ERROR,
-            //             buttons: Ext.Msg.OK
-            //         });
-            //     }
-            // }
-        },
-        listeners: {
-            // write: function(proxy, operation){
-            //     if (operation.action == 'destroy') {
-            //         main.child('#form').setActiveRecord(null);
-            //     }
-            //     Ext.example.msg(operation.action, operation.resultSet.message);
-            // }
-            // update: function(proxy, operation){
-            //     var test = Ext.getCmp('grid').getSelectionModel().getSelection()[0];
-            //     this.set(test);
-            //     alert('your next');
-            // }
-            update: function(){
-                myStore.sync();
-            }
-        }
-        // sorters:[{
-        //     property: 'id',
-        //     direction: 'ASC'
-        // }]
-        
-    });
-
-    myStore.load();
     
     Ext.create('Ext.panel.Panel', {
         title: 'User Information',
@@ -142,19 +112,12 @@ Ext.onReady(function(){
                                     // Name: values.Name
                                 );
                                 
-                                // myStore.insert(0, values);
-                                // Ext.MessageBox.alert('submitted value', form.getValues());
-                                
                                 store.sync({
                                     success: function(){
-                                        store.load();
+                                        // store.load();
                                     }
                                 });
                             }
-                            // Ext.getCmp('grid').getStore().load();
-                            // store.reload();
-                            
-                            
                         }
                     }]
                 }]
@@ -199,7 +162,7 @@ Ext.onReady(function(){
                                         if(btn == 'yes'){
                                             myStore.removeAt(rowIndex);
                                             myStore.sync();
-                                            console.log(rec.get('id'));
+                                            // console.log(rec.get('id'));
                                         }
                                     });
                                 }
@@ -229,22 +192,13 @@ Ext.onReady(function(){
                             }
                         }]
                     },
-
-                    
-
-
-
+                    listeners: {
+                        render: function(){
+                            myStore.load();
+                        }
+                    }
                 }]
             }]
         }]
     });
 });
-
-
-
-// return {
-//     initMethod:function(parameter){
-//         baseUrl = parameter.baseUrl;
-//         return this;
-//     }
-// }

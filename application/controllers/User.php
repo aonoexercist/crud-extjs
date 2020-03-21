@@ -13,6 +13,11 @@ class User extends CI_Controller{
 
     public function insert(){
         header('Content-type: application/json');
+        // header('Access-Control-Allow-Origin: *');
+        // header('Access-Control-Allow-Credentials: true');
+        // header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        // header('Access-Control-Max-Age: 1000');
+        // header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
         // $postdata = file_get_contents("php://input");
         // $json = json_decode($postdata, true);
         $json = json_decode(file_get_contents('php://input'),true);
@@ -28,22 +33,28 @@ class User extends CI_Controller{
     }
 
     public function select(){
+        header('Content-type: application/json');
+        // header('Access-Control-Allow-Origin: *');
+        // header('Access-Control-Allow-Credentials: true');
+        // header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        // header('Access-Control-Max-Age: 1000');
+        // header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
+
         $data = $this->usermodel->showData();
 		$datas['data'] = $data;
 		if($datas){
-            header('Content-Type: application/json');
 			echo json_encode($datas);
-            // return $this->output
-            // ->set_content_type('application/json')
-            // ->set_status_header(500)
-            // ->set_output(json_encode(array(
-            //         $datas
-            // )));
 		}
     }
 
     public function update(int $id){
         header('Content-type: application/json');
+        // header('Access-Control-Allow-Origin: *');
+        // header('Access-Control-Allow-Credentials: true');
+        // header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        // header('Access-Control-Max-Age: 1000');
+        // header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization');
+
         $json = json_decode(file_get_contents('php://input'),true);
         $name = $json['Name'];
         $this->usermodel->updateData($id, $name);
