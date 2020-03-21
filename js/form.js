@@ -112,11 +112,14 @@ Ext.onReady(function(){
                                     // Name: values.Name
                                 );
                                 
-                                store.sync({
-                                    success: function(){
-                                        // store.load();
-                                    }
-                                });
+                                
+                                /** if you want to update every changes uncomment this */
+                                
+                                // store.sync({
+                                //     success: function(){
+                                //         store.load();
+                                //     }
+                                // });
                             }
                         }
                     }]
