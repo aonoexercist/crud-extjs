@@ -109,12 +109,11 @@ Ext.onReady(function(){
                                 var store = Ext.getCmp('grid').getStore();
                                 var test = store.add(
                                     Ext.create('userModel', values)
-                                    // Name: values.Name
                                 );
                                 
                                 
                                 /** if you want to update every changes uncomment this */
-                                
+
                                 // store.sync({
                                 //     success: function(){
                                 //         store.load();
@@ -165,7 +164,6 @@ Ext.onReady(function(){
                                         if(btn == 'yes'){
                                             myStore.removeAt(rowIndex);
                                             myStore.sync();
-                                            // console.log(rec.get('id'));
                                         }
                                     });
                                 }
