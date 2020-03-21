@@ -1,4 +1,4 @@
 # crud-extjs
 CRUD in Ext JS with codeigniter framework
 
-![What is this](pic/extjs-crud.png)
+![Extjs Crud](pic/extjs-crud.png?raw=true "crud extjs")
